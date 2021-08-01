@@ -1,6 +1,7 @@
 from rest_framework import generics
 
 from services.pokemon_card_creator import card_creator
+from services.pokemon_description_translator import translate_description
 from .models import Pokemon
 from .serializers import PokemonSerializer
 
@@ -13,16 +14,18 @@ from rest_framework import status
 
 
 class PokemonCardView(views.APIView):
-    # queryset = Pokemon.objects.all()
-    # lookup_field = 'name'
-    # serializer_class = PokemonSerializer
-    def get(self, request, name):
+
+     def get(self, request, name):
 
         pokemon_card = card_creator(name)
-        results = PokemonSerializer(pokemon_card).data
-        return Response(results)
+        result = PokemonSerializer(pokemon_card).data
+        return Response(result)
 
-class PokemonCardTranslatedView(generics.RetrieveAPIView):
-    queryset = Pokemon.objects.all()
-    lookup_field = 'name'
-    serializer_class = PokemonSerializer
+
+class PokemonCardTranslatedView(views.APIView):
+
+    def get(self, request, name):
+        pokemon_card = card_creator(name)
+        pokemon_card = translate_description(pokemon_card)
+        result = PokemonSerializer(pokemon_card).data
+        return Response(result)

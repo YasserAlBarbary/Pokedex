@@ -1,3 +1,5 @@
+from django.http import Http404
+
 from third_party_api.poke_api import get_pokemon_thirdparty
 
 
@@ -9,7 +11,6 @@ def card_creator(pokemon_name):
 
         pokemonCard['name'] = pokemon_name
         pokemonCard['habitat'] = response.json()['habitat']['name']
-        print(response.json()['is_legendary'])
         pokemonCard['is_legendary'] = True if response.json()['is_legendary']==True else False
 
         for desc in response.json()['flavor_text_entries']:
@@ -18,6 +19,6 @@ def card_creator(pokemon_name):
                 break
         return pokemonCard
     elif response.status_code == 404:
-        return {'Not Found.'}
+        raise Http404
     else:
-        return {'An error has occurred.'}
+        raise Exception("An error has occurred.")
