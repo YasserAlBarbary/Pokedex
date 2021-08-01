@@ -1,7 +1,8 @@
 
 from django.urls import path, URLPattern, URLResolver
-from .views import DetailPokemon
+from .views import PokemonCardView, PokemonCardTranslatedView
 
 urlpatterns = [
-        path('<str:name>/', DetailPokemon.as_view()),
+    #path('translated/<str:name>/', PokemonCardTranslatedView.as_view()),
+    path('<str:name>/', PokemonCardView.as_view()),
     ]
