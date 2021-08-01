@@ -1,9 +1,14 @@
 from django.http import Http404
-
 from third_party_api.poke_api import get_pokemon_thirdparty
 
 
+
 def card_creator(pokemon_name):
+    """
+
+    :param pokemon_name:
+    :return: pokemonCard: json object containing{name, habitat, is_legendary, description}
+    """
     response = get_pokemon_thirdparty(pokemon_name)
     if response.status_code == 200:
 

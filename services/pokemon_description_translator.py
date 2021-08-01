@@ -3,6 +3,11 @@ from third_party_api.yoda_translator import translate_to_yoda
 
 
 def translate_description(pokemon_card):
+    """
+    takes a pokemon card and updates description according to habitat or legendary state
+    :param pokemon_card:
+    :return:
+    """
     if pokemon_card['habitat'] =='cave' or pokemon_card['is_legendary']:
         response = translate_to_yoda(pokemon_card['description'])
     else:
